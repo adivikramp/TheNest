@@ -14,7 +14,7 @@ import { GuestRoutes } from "./routes/GuestRoutes";
 function App() {
 	return (
 		<BrowserRouter>
-			<main className="h-screen">
+			<main className="min-h-screen flex flex-col">
 				<Routes>
 					<Route path="/" element={<Layout />}>
 						<Route index element={<HomePage />} />
