@@ -1,7 +1,7 @@
 /* --------------------------------------------- Get user's existing orders --------------------------------------------- */
 const getUserOrders = async () => {
 	const response = await fetch(
-		`${process.env.BACKEND_URL}/api/forms/userOrders`,
+		`${import.meta.env.VITE_BACKEND_URL}/api/forms/userOrders`,
 		{
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -21,7 +21,7 @@ const getUserOrders = async () => {
 /* --------------------------------------------- Get user's existing feedbacks --------------------------------------------- */
 const getUserFeedback = async () => {
 	const response = await fetch(
-		`${process.env.BACKEND_URL}/api/forms/userFeedbacks`,
+		`${import.meta.env.VITE_BACKEND_URL}/api/forms/userFeedbacks`,
 		{
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,7 +44,7 @@ const orderForm = async (name, email, state, city, order) => {
 		throw Error("all fields are required");
 	}
 
-	const response = await fetch(`${process.env.BACKEND_URL}/api/forms/order`, {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/forms/order`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -78,7 +78,7 @@ const feedbackForm = async (
 	}
 
 	const response = await fetch(
-		`${process.env.BACKEND_URL}/api/forms/feedback`,
+		`${import.meta.env.VITE_BACKEND_URL}/api/forms/feedback`,
 		{
 			method: "POST",
 			headers: {

@@ -4,7 +4,7 @@ const loginUser = async (email, password) => {
 		throw Error("All fields are required");
 	}
 
-	const response = await fetch(`${process.env.BACKEND_URL}/api/users/login`, {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -35,7 +35,7 @@ const registerUser = async (email, password, confirmPassword) => {
 	}
 
 	const response = await fetch(
-		`${process.env.BACKEND_URL}/api/users/register`,
+		`${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
 		{
 			method: "POST",
 			headers: {

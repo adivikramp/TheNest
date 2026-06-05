@@ -2,16 +2,14 @@ import { useState } from "react";
 
 const Success = ({ msg }) => {
 	const [show, setShow] = useState(true);
-
 	setTimeout(() => setShow(false), 2000);
 
+	if (!show) return null;
+
 	return (
-		<div>
-			{show && (
-				<div className="bg-green-500 text-white p-2 rounded-md mt-6 text-sm mb-4">
-					<i className="fa-solid fa-circle-check"></i> {msg}
-				</div>
-			)}
+		<div className="flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mt-4 text-sm">
+			<i className="fa-solid fa-circle-check shrink-0" />
+			<span>{msg}</span>
 		</div>
 	);
 };

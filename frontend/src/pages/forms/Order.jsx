@@ -4,198 +4,131 @@ import { Alert } from "../../components/Alert";
 import { FormContext } from "../../contexts/FormContext";
 import { orderForm } from "../../controllers/formsController";
 
+const states = [
+	"Andhra Pradesh","Andaman and Nicobar Islands","Arunachal Pradesh","Assam","Bihar",
+	"Chandigarh","Chhattisgarh","Dadar and Nagar Haveli","Daman and Diu","Delhi",
+	"Lakshadweep","Puducherry","Goa","Gujarat","Haryana","Himachal Pradesh",
+	"Jammu and Kashmir","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra",
+	"Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim",
+	"Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal",
+];
+
+const inputClass =
+	"w-full border border-stone-300 rounded-xl px-4 py-3 text-sm text-stone-800 placeholder:text-stone-400 focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 transition bg-white";
+
+const labelClass = "text-sm font-medium text-stone-700 mb-1.5 block";
+
 const OrderPage = () => {
-	// use Form Context
 	const { orders, setOrders } = useContext(FormContext);
-
-	// Error State
 	const [error, setError] = useState(null);
-
 	const navigate = useNavigate();
-
-	// Form data state
 	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		state: "",
-		city: "",
-		order: "",
+		name: "", email: "", state: "", city: "", order: "",
 	});
 
-	const handleInput = (e) => {
-		const name = e.target.name;
-		const value = e.target.value;
-
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
+	const handleInput = (e) =>
+		setFormData({ ...formData, [e.target.name]: e.target.value });
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		try {
-			// Place new order
 			const data = await orderForm(
-				formData.name,
-				formData.email,
-				formData.state,
-				formData.city,
-				formData.order,
+				formData.name, formData.email, formData.state,
+				formData.city, formData.order,
 			);
-			// Update order state
 			setOrders([...orders, data.placedOrder]);
-			// navigate to dashboard
 			navigate("/dashboard");
-		} catch (error) {
-			setError(error.message);
+		} catch (err) {
+			setError(err.message);
 		}
 	};
 
 	return (
-		<div className="w-full h-auto flex flex-col items-center bg-cyan-50 py-8">
-			<h2 className="text-center text-2xl font-bold mb-4 uppercase">
-				Order Form
-			</h2>
-			<form
-				onSubmit={handleSubmit}
-				className="h-auto w-4/5 rounded-xl bg-cyan-900"
-			>
-				<div className="flex items-center m-4">
-					<div className="w-1/5 text-xl font-bold text-white">
-						<label htmlFor="name">FULL NAME</label>
-					</div>
-					<div className="w-4/5">
-						<input
-							className="w-full p-2 rounded-lg"
-							type="text"
-							id="name"
-							name="name"
-							value={formData.name}
-							onChange={handleInput}
-							placeholder="Your Full Name.."
-							required
-						/>
-					</div>
-				</div>
-				<div className="flex items-center m-4">
-					<div className="w-1/5 text-xl font-bold text-white">
-						<label htmlFor="email">EMAIL ID</label>
-					</div>
-					<div className="w-4/5">
-						<input
-							className="w-full p-2 rounded-lg"
-							type="email"
-							id="email"
-							name="email"
-							value={formData.email}
-							onChange={handleInput}
-							placeholder="Your Email.."
-							required
-						/>
-					</div>
-				</div>
-				<div className="flex items-center m-4">
-					<div className="w-1/5 text-xl font-bold text-white">
-						<label htmlFor="country">STATE</label>
-					</div>
-					<div className="w-4/5">
-						<select
-							id="state"
-							name="state"
-							value={formData.state}
-							onChange={handleInput}
-							required
-							className="w-full p-2 rounded-lg"
-						>
-							<option value="none">Select State</option>
-							<option value="Andhra Pradesh">Andhra Pradesh</option>
-							<option value="Andaman and Nicobar Islands">
-								Andaman and Nicobar Islands
-							</option>
-							<option value="Arunachal Pradesh">Arunachal Pradesh</option>
-							<option value="Assam">Assam</option>
-							<option value="Bihar">Bihar</option>
-							<option value="Chandigarh">Chandigarh</option>
-							<option value="Chhattisgarh">Chhattisgarh</option>
-							<option value="Dadar and Nagar Haveli">
-								Dadar and Nagar Haveli
-							</option>
-							<option value="Daman and Diu">Daman and Diu</option>
-							<option value="Delhi">Delhi</option>
-							<option value="Lakshadweep">Lakshadweep</option>
-							<option value="Puducherry">Puducherry</option>
-							<option value="Goa">Goa</option>
-							<option value="Gujarat">Gujarat</option>
-							<option value="Haryana">Haryana</option>
-							<option value="Himachal Pradesh">Himachal Pradesh</option>
-							<option value="Jammu and Kashmir">Jammu and Kashmir</option>
-							<option value="Jharkhand">Jharkhand</option>
-							<option value="Karnataka">Karnataka</option>
-							<option value="Kerala">Kerala</option>
-							<option value="Madhya Pradesh">Madhya Pradesh</option>
-							<option value="Maharashtra">Maharashtra</option>
-							<option value="Manipur">Manipur</option>
-							<option value="Meghalaya">Meghalaya</option>
-							<option value="Mizoram">Mizoram</option>
-							<option value="Nagaland">Nagaland</option>
-							<option value="Odisha">Odisha</option>
-							<option value="Punjab">Punjab</option>
-							<option value="Rajasthan">Rajasthan</option>
-							<option value="Sikkim">Sikkim</option>
-							<option value="Tamil Nadu">Tamil Nadu</option>
-							<option value="Telangana">Telangana</option>
-							<option value="Tripura">Tripura</option>
-							<option value="Uttar Pradesh">Uttar Pradesh</option>
-							<option value="Uttarakhand">Uttarakhand</option>
-							<option value="West Bengal">West Bengal</option>
-						</select>
-					</div>
-				</div>
-				<div className="flex items-center m-4">
-					<div className="w-1/5 text-xl font-bold text-white">
-						<label htmlFor="city">CITY</label>
-					</div>
-					<div className="w-4/5">
-						<input
-							className="w-full p-2 rounded-lg"
-							type="text"
-							id="city"
-							name="city"
-							value={formData.city}
-							onChange={handleInput}
-							placeholder="Your City.."
-							required
-						/>
-					</div>
-				</div>
-				<div className="flex items-center m-4">
-					<div className="w-1/5 text-xl font-bold text-white">
-						<label htmlFor="order">ORDER</label>
-					</div>
-					<div className="w-4/5">
-						<textarea
-							className="w-full"
-							id="order"
-							name="order"
-							rows="6"
-							placeholder="Your Order Here........."
-							value={formData.order}
-							onChange={handleInput}
-						/>
-					</div>
-				</div>
-				<div className="flex m-4">
-					<input
-						type="submit"
-						value="SUBMIT"
-						className="cursor-pointer mx-auto bg-white text-xl text-black font-bold px-48 py-4 rounded-xl mt-12 duration-500 hover:scale-105"
-					/>
-				</div>
-			</form>
+		<div className="min-h-screen bg-stone-50">
+			{/* Header */}
+			<div className="bg-green-800 px-6 py-12 text-center">
+				<span className="text-green-300 text-sm font-semibold uppercase tracking-widest">
+					Shop
+				</span>
+				<h1 className="font-display text-4xl font-bold text-white mt-2">
+					Place an Order
+				</h1>
+				<p className="text-green-200 mt-3 max-w-md mx-auto text-sm">
+					Fill in your details and we'll get your plants delivered within 3 days.
+				</p>
+			</div>
 
-			{error && <Alert msg={error} />}
+			{/* Form card */}
+			<div className="max-w-2xl mx-auto px-4 py-12">
+				<div className="bg-white rounded-2xl shadow-sm border border-stone-200 p-8">
+					<form onSubmit={handleSubmit} className="flex flex-col gap-6">
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+							<div>
+								<label htmlFor="name" className={labelClass}>Full Name</label>
+								<input
+									id="name" type="text" name="name"
+									value={formData.name} onChange={handleInput}
+									placeholder="Your full name" required
+									className={inputClass}
+								/>
+							</div>
+							<div>
+								<label htmlFor="email" className={labelClass}>Email Address</label>
+								<input
+									id="email" type="email" name="email"
+									value={formData.email} onChange={handleInput}
+									placeholder="you@example.com" required
+									className={inputClass}
+								/>
+							</div>
+						</div>
+
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+							<div>
+								<label htmlFor="state" className={labelClass}>State</label>
+								<select
+									id="state" name="state"
+									value={formData.state} onChange={handleInput} required
+									className={inputClass}
+								>
+									<option value="">Select State</option>
+									{states.map((s) => (
+										<option key={s} value={s}>{s}</option>
+									))}
+								</select>
+							</div>
+							<div>
+								<label htmlFor="city" className={labelClass}>City</label>
+								<input
+									id="city" type="text" name="city"
+									value={formData.city} onChange={handleInput}
+									placeholder="Your city" required
+									className={inputClass}
+								/>
+							</div>
+						</div>
+
+						<div>
+							<label htmlFor="order" className={labelClass}>Your Order</label>
+							<textarea
+								id="order" name="order" rows={5}
+								value={formData.order} onChange={handleInput}
+								placeholder="Describe what you'd like to order - plant names, quantities, any special requests..."
+								className={`${inputClass} resize-none`}
+							/>
+						</div>
+
+						{error && <Alert msg={error} />}
+
+						<button
+							type="submit"
+							className="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3.5 rounded-full transition-colors text-sm"
+						>
+							Submit Order
+						</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	);
 };

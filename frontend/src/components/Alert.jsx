@@ -1,7 +1,8 @@
 const Alert = ({ msg }) => {
 	return (
-		<div className="bg-red-500 text-white p-2 rounded-md mt-6 text-sm mb-4">
-			<i className="fa-solid fa-triangle-exclamation"></i> {msg}
+		<div className="flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mt-4 text-sm">
+			<i className="fa-solid fa-triangle-exclamation shrink-0" />
+			<span>{msg}</span>
 		</div>
 	);
 };
